@@ -62,34 +62,52 @@
   $('button').click(function(event) {
     var myLength = $("#search").val().length;
     var mySearch = $("#search").val();
+
     // Cancel default navigation of link
     event.preventDefault();
     console.log('button clicked');
-    console.log(myLength);
+    //console.log(myLength);
     console.log(mySearch);
     if (myLength < 1) {
       alert('please enter a search');
+      return;
     }
 
-    // var $xhr = $.ajax({
-    //   method: 'GET', // GET is default
-    //   url: 'https:omdb-api.now.sh/?s=$' + mySearch,
-    //   dataType: 'json',
-    //   data: '{
-    //
-    //   }',
-    // });
-    var $xhr = $.getJSON('https://omdb-api.now.sh/?s=$' + mySearch);
+    var $xhr = $.getJSON('https://omdb-api.now.sh/?s=' + mySearch);
     $xhr.done(function(data) {
       if ($xhr.status !== 200) {
         // The served an unsuccessful status code.
         return;
       }
-      var movie = data.Search;
-      //movies.push([0])
-      console.log(movie[0]);
-    });
-  })
+      //var movieArray = [];
+      // var movie = {
+      //   'id': '',
+      //   'poster': '',
+      //   'title': '',
+      //   'year': ''
+      // };
+      //console.log(data.Search);
+      var films = data.Search;
+      console.log(films);
+      for (var i = 0; i < films.length; i++) {
+        var movie = {};
+        movie.id = films[i].imdbID;
+        movie.poster = films[i].Poster;
+        movie.title = films[i].Title;
+        movie.year = films[i].Year;
+        movies.push(movie);
+      }
+
+      // movieArray.push(movie)
+
+
+      console.log(movie);
+      console.log(movies);
+      return renderMovies();
+      //console.log(movieArray);
+    })
+
+  });
 
 
   // ADD YOUR CODE HERE
