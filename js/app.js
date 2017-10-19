@@ -62,10 +62,11 @@
   $('button').click(function(event) {
     var myLength = $("#search").val().length;
     var mySearch = $("#search").val();
-
+    while(movies.length > 0){
+    movies.pop();}
     // Cancel default navigation of link
     event.preventDefault();
-    console.log('button clicked');
+    //console.log('button clicked');
     //console.log(myLength);
     console.log(mySearch);
     if (myLength < 1) {
@@ -79,16 +80,10 @@
         // The served an unsuccessful status code.
         return;
       }
-      //var movieArray = [];
-      // var movie = {
-      //   'id': '',
-      //   'poster': '',
-      //   'title': '',
-      //   'year': ''
-      // };
+
       //console.log(data.Search);
       var films = data.Search;
-      console.log(films);
+      //console.log(films);
       for (var i = 0; i < films.length; i++) {
         var movie = {};
         movie.id = films[i].imdbID;
@@ -97,16 +92,10 @@
         movie.year = films[i].Year;
         movies.push(movie);
       }
-
-      // movieArray.push(movie)
-
-
       console.log(movie);
       console.log(movies);
       return renderMovies();
-      //console.log(movieArray);
     })
-
   });
 
 
